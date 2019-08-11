@@ -24,17 +24,9 @@ export default function Main({ match }){
     }, [match.params.id]);
 
     useEffect(() => {
-        const socket = io('http://localhost:3333');
-
-        socket.on('world', message => {
-            console.log(message)
-        })
-
-        setTimeout(() => {
-            socket.emit('hello', {
-                message: 'Hello World'
-            });
-        }, 3000);
+        const socket = io('http://localhost:3333', {
+            query: { user: match.params.id }
+        });
     }, [match.params.id]);
 
     async function handleLike(id) {
@@ -80,7 +72,7 @@ export default function Main({ match }){
                     ))}
                 </ul>
             ) : (
-                <div class="empt">Acabou :(</div>
+                <div className="empt">Acabou :(</div>
             )}
         </div>
     );
